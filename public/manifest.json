@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Showdown Team Check",
+  "version": "1.0.0",
+  "description": "Checks your Pokémon Showdown team for accidental mistakes — missing items, abilities, moves and more — before you battle.",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Check your team"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://play.pokemonshowdown.com/*", "https://*.psim.us/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
