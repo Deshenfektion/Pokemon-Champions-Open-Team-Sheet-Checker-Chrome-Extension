@@ -5,6 +5,7 @@ import { missingItemRule } from './missingItem';
 import { missingLevelRule } from './missingLevel';
 import { missingNatureRule } from './missingNature';
 import { missingSpeciesRule } from './missingSpecies';
+import { moveCountRule } from './moveCount';
 
 export const allRules: readonly ValidationRule[] = [
   missingSpeciesRule,
@@ -13,4 +14,5 @@ export const allRules: readonly ValidationRule[] = [
   missingAbilityRule,
   missingNatureRule,
   missingLevelRule,
+  moveCountRule,
 ];
