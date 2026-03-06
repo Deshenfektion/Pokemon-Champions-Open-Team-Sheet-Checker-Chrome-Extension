@@ -1,4 +1,5 @@
 import type { ValidationRule } from '../../shared/types/validation';
+import { duplicateMovesRule } from './duplicateMoves';
 import { emptyMoveRule } from './emptyMove';
 import { incompleteEntryRule } from './incompleteEntry';
 import { missingAbilityRule } from './missingAbility';
@@ -17,4 +18,5 @@ export const allRules: readonly ValidationRule[] = [
   missingLevelRule,
   moveCountRule,
   emptyMoveRule,
+  duplicateMovesRule,
 ];
