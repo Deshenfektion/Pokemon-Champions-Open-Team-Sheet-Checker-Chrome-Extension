@@ -1,6 +1,7 @@
 import type { ValidationRule } from '../../shared/types/validation';
 import { duplicateItemsRule } from './duplicateItems';
 import { duplicateMovesRule } from './duplicateMoves';
+import { duplicateNicknamesRule } from './duplicateNicknames';
 import { duplicatePokemonRule } from './duplicatePokemon';
 import { emptyMoveRule } from './emptyMove';
 import { incompleteEntryRule } from './incompleteEntry';
@@ -23,4 +24,5 @@ export const allRules: readonly ValidationRule[] = [
   duplicateMovesRule,
   duplicatePokemonRule,
   duplicateItemsRule,
+  duplicateNicknamesRule,
 ];
