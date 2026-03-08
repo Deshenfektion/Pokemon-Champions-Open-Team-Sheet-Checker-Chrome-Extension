@@ -6,6 +6,7 @@ import { duplicatePokemonRule } from './duplicatePokemon';
 import { emptyMoveRule } from './emptyMove';
 import { choiceItemStatusMovesRule } from './heuristics/choiceItemStatusMoves';
 import { focusSashNoAttacksRule } from './heuristics/focusSashNoAttacks';
+import { missingProtectRule } from './heuristics/missingProtect';
 import { nicknameMatchesSpeciesRule } from './heuristics/nicknameMatchesSpecies';
 import { incompleteEntryRule } from './incompleteEntry';
 import { missingAbilityRule } from './missingAbility';
@@ -31,4 +32,5 @@ export const allRules: readonly ValidationRule[] = [
   choiceItemStatusMovesRule,
   focusSashNoAttacksRule,
   nicknameMatchesSpeciesRule,
+  missingProtectRule,
 ];
