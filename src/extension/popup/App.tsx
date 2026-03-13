@@ -8,14 +8,17 @@ import { EmptyState } from './components/EmptyState';
 import { ParserNotes } from './components/ParserNotes';
 import { PokemonCard } from './components/PokemonCard';
 import { SettingsPanel } from './components/SettingsPanel';
+import { SourceBanner } from './components/SourceBanner';
 import { SummaryBar } from './components/SummaryBar';
 import { TeamInput } from './components/TeamInput';
+import { usePageTeam } from './hooks/usePageTeam';
 import { useSettings } from './hooks/useSettings';
 
 export const App = () => {
   const [teamText, setTeamText] = useState('');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { settings, updateSettings } = useSettings();
+  const pageTeam = usePageTeam(setTeamText);
 
   const parsed = useMemo(() => parseTeam(teamText), [teamText]);
   const report = useMemo(
@@ -53,6 +56,7 @@ export const App = () => {
 
       <main className="space-y-3 p-3">
         {settingsOpen && <SettingsPanel settings={settings} onChange={updateSettings} />}
+        <SourceBanner status={pageTeam.status} onRefresh={pageTeam.refresh} />
         <TeamInput value={teamText} onChange={setTeamText} />
 
         {hasTeam ? (
