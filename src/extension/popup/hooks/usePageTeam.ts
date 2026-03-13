@@ -15,22 +15,32 @@ export const usePageTeam = (
 ): UsePageTeamResult => {
   const [status, setStatus] = useState<PageTeamStatus>('reading');
 
-  const read = useCallback(async () => {
-    const teamText = await source.read();
-    setStatus(teamText === null ? 'unavailable' : 'loaded');
-    if (teamText !== null) {
-      onTeam(teamText);
-    }
-  }, [source, onTeam]);
+  const applyResult = useCallback(
+    (teamText: string | null) => {
+      setStatus(teamText === null ? 'unavailable' : 'loaded');
+      if (teamText !== null) {
+        onTeam(teamText);
+      }
+    },
+    [onTeam],
+  );
 
   useEffect(() => {
-    void read();
-  }, [read]);
+    let cancelled = false;
+    void source.read().then((teamText) => {
+      if (!cancelled) {
+        applyResult(teamText);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [source, applyResult]);
 
   const refresh = useCallback(() => {
     setStatus('reading');
-    void read();
-  }, [read]);
+    void source.read().then(applyResult);
+  }, [source, applyResult]);
 
   return { status, refresh };
 };
