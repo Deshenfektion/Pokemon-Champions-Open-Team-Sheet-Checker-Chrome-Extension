@@ -4,6 +4,7 @@ import type { ValidationMessage } from '../../shared/types/validation';
 import { getDisplayName } from '../../shared/utils/names';
 import { runValidation } from '../../validation/engine';
 import { allRules } from '../../validation/rules';
+import { AllClearBanner } from './components/AllClearBanner';
 import { EmptyState } from './components/EmptyState';
 import { ParserNotes } from './components/ParserNotes';
 import { PokemonCard } from './components/PokemonCard';
@@ -62,11 +63,12 @@ export const App = () => {
         {hasTeam ? (
           <>
             <SummaryBar report={report} />
+            {report.counts.error === 0 && report.counts.warning === 0 && (
+              <AllClearBanner pokemonCount={report.pokemonCount} infoCount={report.counts.info} />
+            )}
             <ParserNotes issues={parsed.issues} />
             <div className="space-y-2">
-              {teamMessages.length > 0 && (
-                <PokemonCard name="Whole team" messages={teamMessages} />
-              )}
+              {teamMessages.length > 0 && <PokemonCard name="Whole team" messages={teamMessages} />}
               {parsed.team.pokemon.map((pokemon, index) => (
                 <PokemonCard
                   key={index}
