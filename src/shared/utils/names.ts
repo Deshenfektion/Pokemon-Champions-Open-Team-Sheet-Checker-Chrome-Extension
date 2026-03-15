@@ -8,6 +8,4 @@ export const baseSpecies = (species: string): string => {
 };
 
 export const getDisplayName = (pokemon: Pokemon, index: number): string =>
-  pokemon.species !== ''
-    ? pokemon.species
-    : (pokemon.nickname ?? `Pokémon #${String(index + 1)}`);
+  pokemon.species !== '' ? pokemon.species : (pokemon.nickname ?? `Pokémon #${String(index + 1)}`);

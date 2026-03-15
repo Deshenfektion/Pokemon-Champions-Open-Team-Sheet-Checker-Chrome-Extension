@@ -16,9 +16,7 @@ export const ParserNotes = ({ issues }: ParserNotesProps) => {
       <ul className="mt-2 space-y-1.5">
         {issues.map((issue, index) => (
           <li key={index} className="text-xs text-slate-600 dark:text-slate-400">
-            <span className="font-mono text-slate-400 dark:text-slate-500">
-              L{issue.line}
-            </span>{' '}
+            <span className="font-mono text-slate-400 dark:text-slate-500">L{issue.line}</span>{' '}
             <span className="font-mono">{issue.content}</span> — {issue.message}
           </li>
         ))}

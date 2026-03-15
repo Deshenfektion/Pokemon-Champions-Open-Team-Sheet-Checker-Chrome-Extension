@@ -5,7 +5,11 @@ import { nonEmptyMoves } from '../../helpers';
 import { perPokemonRule } from '../../ruleKit';
 
 export const choiceItemStatusMovesRule = perPokemonRule('choice-item-status-moves', (pokemon) => {
-  if (pokemon.species === '' || pokemon.item === undefined || !CHOICE_ITEMS.has(toId(pokemon.item))) {
+  if (
+    pokemon.species === '' ||
+    pokemon.item === undefined ||
+    !CHOICE_ITEMS.has(toId(pokemon.item))
+  ) {
     return null;
   }
   const moves = nonEmptyMoves(pokemon);
