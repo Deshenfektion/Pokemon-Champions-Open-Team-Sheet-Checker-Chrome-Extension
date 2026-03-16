@@ -1,9 +1,4 @@
-import { useMemo, useState } from 'react';
-import { parseTeam } from '../../parser/parseTeam';
-import type { ValidationMessage } from '../../shared/types/validation';
-import { getDisplayName } from '../../shared/utils/names';
-import { runValidation } from '../../validation/engine';
-import { allRules } from '../../validation/rules';
+import { useState } from 'react';
 import { AllClearBanner } from './components/AllClearBanner';
 import { EmptyState } from './components/EmptyState';
 import { ParserNotes } from './components/ParserNotes';
@@ -14,24 +9,14 @@ import { SummaryBar } from './components/SummaryBar';
 import { TeamInput } from './components/TeamInput';
 import { usePageTeam } from './hooks/usePageTeam';
 import { useSettings } from './hooks/useSettings';
+import { useTeamReport } from './hooks/useTeamReport';
 
 export const App = () => {
   const [teamText, setTeamText] = useState('');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { settings, updateSettings } = useSettings();
   const pageTeam = usePageTeam(setTeamText);
-
-  const parsed = useMemo(() => parseTeam(teamText), [teamText]);
-  const report = useMemo(
-    () => runValidation(parsed.team, settings, allRules),
-    [parsed.team, settings],
-  );
-
-  const teamMessages = report.messages.filter((message) => message.pokemonIndex === undefined);
-  const messagesFor = (index: number): readonly ValidationMessage[] =>
-    report.messages.filter((message) => message.pokemonIndex === index);
-
-  const hasTeam = parsed.team.pokemon.length > 0;
+  const view = useTeamReport(teamText, settings);
 
   return (
     <div className="min-h-[300px] bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-100">
@@ -60,25 +45,26 @@ export const App = () => {
         <SourceBanner status={pageTeam.status} onRefresh={pageTeam.refresh} />
         <TeamInput value={teamText} onChange={setTeamText} />
 
-        {hasTeam ? (
+        {view.hasTeam ? (
           <>
-            <SummaryBar report={report} />
-            {report.counts.error === 0 && report.counts.warning === 0 && (
-              <AllClearBanner pokemonCount={report.pokemonCount} infoCount={report.counts.info} />
+            <SummaryBar report={view.report} />
+            {view.allClear && (
+              <AllClearBanner
+                pokemonCount={view.report.pokemonCount}
+                infoCount={view.report.counts.info}
+              />
             )}
-            <ParserNotes issues={parsed.issues} />
+            <ParserNotes issues={view.parseIssues} />
             <div className="space-y-2">
-              {teamMessages.length > 0 && <PokemonCard name="Whole team" messages={teamMessages} />}
-              {parsed.team.pokemon.map((pokemon, index) => (
+              {view.teamMessages.length > 0 && (
+                <PokemonCard name="Whole team" messages={view.teamMessages} />
+              )}
+              {view.groups.map((group, index) => (
                 <PokemonCard
-                  key={index}
-                  name={getDisplayName(pokemon, index)}
-                  subtitle={
-                    pokemon.nickname !== undefined && pokemon.species !== ''
-                      ? `“${pokemon.nickname}”`
-                      : undefined
-                  }
-                  messages={messagesFor(index)}
+                  key={`${group.name}-${String(index)}`}
+                  name={group.name}
+                  subtitle={group.subtitle}
+                  messages={group.messages}
                 />
               ))}
             </div>
