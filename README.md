@@ -1,6 +1,6 @@
 # Open Team Sheet Check - specifically designed for Pokémon Champions
 
-Download available [here]([https://www.google.com](https://chromewebstore.google.com/detail/showdown-team-check/dhnicfligedphfpbekpdhkhncoohlaio?authuser=0&hl=de))
+Download available [here](https://chromewebstore.google.com/detail/showdown-team-check/dhnicfligedphfpbekpdhkhncoohlaio?authuser=0&hl=de)
 
 A Chrome extension (Manifest V3) that checks your Pokémon Showdown team for accidental mistakes
 before you battle — think "Grammarly for Showdown teams".
